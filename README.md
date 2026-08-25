@@ -10,6 +10,6 @@ The main users are:
 - Owner: Monitor the repairs and manages the shop's service prices.
 
 ## Documentation
-User stories: docs/user-stories.md
-Domain model: docs/domain-model.md
-Decisions: docs/decisions.md
+- [User stories:](docs/user-stories.md)
+- [Domain model:](docs/domain-model.md)
+- [Decisions:](docs/decisions.md)
