@@ -89,14 +89,15 @@ The repair states are the following ones:
 - Approved to ready: The bike can't be repaired before the customer's answer.
 
 ## Entity trace table:
-|Entity|User story number|
-|Customers|1|
-|Bikes|1, 3|
-|Repairs|2, 5, 9, 10, 12, 14|
-|Mechanics|12, 13, 14|
-|Services|6, 8, 13|
-|Repair_services|6, 7, 13|
-|Repair_photos|4|
+| Entity | User story number |
+|---|---|
+| Customers | 1 |
+| Bikes | 1, 3 |
+| Repairs | 2, 5, 9, 10, 12, 14 |
+| Mechanics | 12, 13, 14 |
+| Services | 6, 8, 13 |
+| Repair_services | 6, 7, 13 |
+| Repair_photos | 4 |
 
 
 ## The thing and the copy of the thing:
