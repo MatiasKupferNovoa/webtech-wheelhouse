@@ -13,3 +13,4 @@ The main users are:
 - [User stories:](docs/user-stories.md)
 - [Domain model:](docs/domain-model.md)
 - [Decisions:](docs/decisions.md)
+-  [Wireframes:](docs/wireframes.md)
