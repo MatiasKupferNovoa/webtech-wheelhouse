@@ -1,0 +1,46 @@
+<h1>Wheelhouse</h1>
+
+<p>
+  Wheelhouse is a local bicycle workshop offering maintenance and repair
+  services for everyday riders.
+</p>
+
+<h2>Explore Wheelhouse</h2>
+
+<div class="row g-4">
+  <div class="col-12 col-lg-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h3 class="card-title">Services</h3>
+        <p class="card-text">
+          Explore our maintenance and repair services.
+        </p>
+        <%= link_to "View services", services_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h3 class="card-title">Visit</h3>
+        <p class="card-text">
+          Find our location, opening hours and what to expect.
+        </p>
+        <%= link_to "Visit the workshop", visit_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h3 class="card-title">About</h3>
+        <p class="card-text">
+          Learn more about Wheelhouse and the people behind it.
+        </p>
+        <%= link_to "About Wheelhouse", about_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
