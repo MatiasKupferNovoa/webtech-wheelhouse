@@ -5,60 +5,75 @@
 ```
 Table customers {
   id integer [pk, increment]
-  name varchar
-  phone varchar
+  name varchar [not null]
+  phone varchar [not null]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
 }
 
 Table bikes {
   id integer [pk, increment]
-  brand varchar
-  model varchar
-  serial_number varchar [unique]
+  customer_id integer [not null, ref: > customers.id]
+  brand varchar [not null]
+  model varchar [not null]
+  color varchar [not null]
+  serial_number varchar [not null, unique]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
 }
 
-Table mechanics {
+Table staffs {
   id integer [pk, increment]
-  name varchar
+  name varchar [not null]
+  role varchar [not null]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
 }
 
 Table repairs {
   id integer [pk, increment]
-  customer_id integer [ref: > customers.id]
   bike_id integer [ref: > bikes.id]
-  mechanic_id integer [ref: > mechanics.id]
+  staff_id integer [ref: > staffs.id]
 
-  received_at datetime
-  promised_on datetime
-
-  diagnosis text
+  received_at timestamp [not null]
+  promised_on date
 
   approval_status varchar
-  status varchar
+  status varchar [not null, default: "received"]
 
-  ready_at datetime
-  picked_up_at datetime
+  ready_at timestamp
+  picked_up_at timestamp
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
 }
 
 Table services {
   id integer [pk, increment]
-  name varchar
-  current_price decimal(10,2)
+  name varchar [not null, unique]
+  current_price decimal(10,2) [not null]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
 }
 
 Table repair_services {
   id integer [pk, increment]
   repair_id integer [ref: > repairs.id]
   service_id integer [ref: > services.id]
-  price_charged decimal(10,2)
+  price_charged decimal(10,2) [not null]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
 }
 
-Table repair_photos {
-  id integer [pk, increment]
-  repair_id integer [ref: > repairs.id]
-  image_reference varchar
-  taken_at datetime
-}
 ```
+## Changes since Lab 3
+- Renamed the `mechanics` table to `staffs` because Wheelhouse includes both mechanics and counter staff.
+- Added `role` to `staffs` to distinguish mechanics from counter staff.
+- Added `customer_id` to `bikes` because every bike must have an owner.
+- Added `color` to `bikes` to identify bicycles with otherwise identical descriptions.
+- Removed `customer_id` from `repairs` because the customer is obtained through the repair's bike.
+- Changed `promised_on` to `date` because it represents a calendar day rather than an exact moment.
+- Added `status` with a default of `received`, the first state in the repair lifecycle.
+- Deleted repair photos and written diagnoses until Lab 9, as required by Lab 5.
 
 ## Repair lifecycle
 ### States:
