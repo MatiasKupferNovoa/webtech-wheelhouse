@@ -10,8 +10,67 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 0) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_08_212526) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "bikes", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.string "brand", null: false
+    t.string "model", null: false
+    t.string "color", null: false
+    t.string "serial_number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_bikes_on_customer_id"
+    t.index ["serial_number"], name: "index_bikes_on_serial_number", unique: true
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "phone", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "repair_services", force: :cascade do |t|
+    t.bigint "repair_id", null: false
+    t.bigint "service_id", null: false
+    t.decimal "price_charged", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["repair_id", "service_id"], name: "index_repair_services_on_repair_id_and_service_id", unique: true
+    t.index ["repair_id"], name: "index_repair_services_on_repair_id"
+    t.index ["service_id"], name: "index_repair_services_on_service_id"
+  end
+
+  create_table "repairs", force: :cascade do |t|
+    t.bigint "bike_id", null: false
+    t.bigint "staff_id"
+    t.datetime "received_at", null: false
+    t.date "promised_on"
+    t.string "approval_status"
+    t.string "status", default: "received", null: false
+    t.datetime "ready_at"
+    t.datetime "picked_up_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bike_id"], name: "index_repairs_on_bike_id"
+    t.index ["staff_id"], name: "index_repairs_on_staff_id"
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "current_price", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_services_on_name", unique: true
+  end
+
+  create_table "staffs", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "role", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 end
