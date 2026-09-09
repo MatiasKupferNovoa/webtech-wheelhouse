@@ -48,3 +48,6 @@ Now start PostgreSQL:
 ## Run app
 To run the application, you need to use this command:
 - bin/dev
+Open http://localhost:3000 and go to Services to see the 20 services and their prices.
+To reload the sample data, use this command:
+- bin/rails db:seed

@@ -4,7 +4,7 @@
 ## Domain model code
 ```
 Table customers {
-  id integer [pk, increment]
+  id bigint [pk, increment]
   name varchar [not null]
   phone varchar [not null]
   created_at timestamp [not null]
@@ -12,8 +12,8 @@ Table customers {
 }
 
 Table bikes {
-  id integer [pk, increment]
-  customer_id integer [not null, ref: > customers.id]
+  id bigint [pk, increment]
+  customer_id bigint [not null, ref: > customers.id]
   brand varchar [not null]
   model varchar [not null]
   color varchar [not null]
@@ -23,7 +23,7 @@ Table bikes {
 }
 
 Table staffs {
-  id integer [pk, increment]
+  id bigint [pk, increment]
   name varchar [not null]
   role varchar [not null]
   created_at timestamp [not null]
@@ -31,9 +31,9 @@ Table staffs {
 }
 
 Table repairs {
-  id integer [pk, increment]
-  bike_id integer [ref: > bikes.id]
-  staff_id integer [ref: > staffs.id]
+  id bigint [pk, increment]
+  bike_id bigint [not null, ref: > bikes.id]
+  staff_id bigint [ref: > staffs.id]
 
   received_at timestamp [not null]
   promised_on date
@@ -48,7 +48,7 @@ Table repairs {
 }
 
 Table services {
-  id integer [pk, increment]
+  id bigint [pk, increment]
   name varchar [not null, unique]
   current_price decimal(10,2) [not null]
   created_at timestamp [not null]
@@ -56,9 +56,9 @@ Table services {
 }
 
 Table repair_services {
-  id integer [pk, increment]
-  repair_id integer [ref: > repairs.id]
-  service_id integer [ref: > services.id]
+  id bigint [pk, increment]
+  repair_id bigint [not null, ref: > repairs.id]
+  service_id bigint [not null, ref: > services.id]
   price_charged decimal(10,2) [not null]
   created_at timestamp [not null]
   updated_at timestamp [not null]
