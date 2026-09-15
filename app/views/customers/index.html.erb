@@ -1,0 +1,24 @@
+<h1>Customers</h1>
+
+<p>
+  Browse the customers registered at Wheelhouse.
+</p>
+
+<% if @customers.empty? %>
+  <p class="text-muted">No customers registered.</p>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Phone</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <%= render @customers %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

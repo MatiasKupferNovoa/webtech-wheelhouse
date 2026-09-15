@@ -1,0 +1,49 @@
+<% content_for :title, "#{@bike.brand} #{@bike.model} (#{@bike.serial_number})" %>
+
+<div class="card">
+  <div class="card-body">
+    <h1 class="card-title h4">
+      <%= @bike.brand %> <%= @bike.model %>
+    </h1>
+
+    <p class="card-text">
+      Serial number: <%= @bike.serial_number %>
+    </p>
+
+    <p class="card-text">
+      Color: <%= @bike.color %>
+    </p>
+
+    <p class="card-text">
+      Customer:
+      <%= link_to @bike.customer.name, customer_path(@bike.customer) %>
+    </p>
+  </div>
+</div>
+
+<h2 class="h5 mt-4">Repairs</h2>
+
+<% if @bike.repairs.empty? %>
+  <p>This bike has no repairs registered.</p>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Repair</th>
+          <th scope="col">Bike</th>
+          <th scope="col">Customer</th>
+          <th scope="col">Status</th>
+          <th scope="col">Promised date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <%= render @bike.repairs.order(received_at: :desc) %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<%= link_to "All bikes", bikes_path,
+            class: "btn btn-outline-secondary mt-3" %>

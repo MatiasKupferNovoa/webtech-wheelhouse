@@ -7,9 +7,14 @@ Rails.application.routes.draw do
 
   root "pages#home"
 
-  get "services", to: "pages#services", as: :services
   get "visit", to: "pages#visit", as: :visit
   get "about", to: "pages#about", as: :about
+  
+  resources :customers, only: [:index, :show]
+  resources :bikes, only: [:index, :show]
+  resources :repairs, only: [:index, :show]
+  resources :services, only: [:index, :show]
+  resources :staffs, only: [:index, :show]
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

@@ -1,0 +1,14 @@
+<tr>
+  <td>
+    <%= link_to repair_service.repair_id,
+                repair_path(repair_service.repair) %>
+  </td>
+  <td>
+    <%= link_to repair_service.service.name,
+                service_path(repair_service.service) %>
+  </td>
+  <td>
+    <%= number_to_currency(
+          repair_service.price_charged, unit: "$", precision: 0) %>
+  </td>
+</tr>

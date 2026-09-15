@@ -1,0 +1,29 @@
+<% content_for :title, @staff.name %>
+
+<h1><%= @staff.name %></h1>
+<p>Role: <%= @staff.role %></p>
+
+<h2>Repairs</h2>
+
+<% if @staff.repairs.empty? %>
+  <p>No repairs assigned.</p>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Repair</th>
+          <th scope="col">Bike</th>
+          <th scope="col">Customer</th>
+          <th scope="col">Status</th>
+          <th scope="col">Promised date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @staff.repairs.order(received_at: :desc) %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<%= link_to "All staff", staffs_path %>

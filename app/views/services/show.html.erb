@@ -1,0 +1,40 @@
+<% content_for :title, @service.name %>
+
+<div class="card">
+  <div class="card-body">
+    <h1 class="card-title h4"><%= @service.name %></h1>
+
+    <p class="card-text">
+      Current price:
+      <%= number_to_currency(
+            @service.current_price, unit: "$", precision: 0) %>
+    </p>
+  </div>
+</div>
+
+<h2 class="h5 mt-4">Repairs using this service</h2>
+
+<% if @service.repair_services.empty? %>
+  <p class="text-muted">
+    This service has not been charged on any repairs.
+  </p>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Repair</th>
+          <th scope="col">Service</th>
+          <th scope="col">Price charged</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <%= render @service.repair_services %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<%= link_to "All services", services_path,
+            class: "btn btn-outline-secondary mt-3" %>

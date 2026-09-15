@@ -1,0 +1,23 @@
+<tr class="<%= 'table-danger' if repair.promised_on &&
+                               repair.promised_on < Date.current &&
+                               repair.picked_up_at.nil? %>">
+  <td>
+    <%= link_to repair.id, repair_path(repair) %>
+  </td>
+  <td>
+    <%= link_to "#{repair.bike.brand} #{repair.bike.model} (#{repair.bike.serial_number})",
+                bike_path(repair.bike) %>
+  </td>
+  <td>
+    <%= link_to repair.bike.customer.name,
+                customer_path(repair.bike.customer) %>
+  </td>
+  <td><%= repair.status %></td>
+  <td>
+    <% if repair.promised_on %>
+      <%= l(repair.promised_on, format: :long) %>
+    <% else %>
+      Not scheduled
+    <% end %>
+  </td>
+</tr>

@@ -1,0 +1,24 @@
+<h1>Services</h1>
+
+<p>
+  Explore the maintenance and repair services available at Wheelhouse.
+</p>
+
+<% if @services.empty? %>
+  <p class="text-muted">No services available.</p>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Service</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <%= render @services %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

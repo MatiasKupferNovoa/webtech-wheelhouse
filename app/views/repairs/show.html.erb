@@ -1,0 +1,79 @@
+<% content_for :title, "Repair ##{@repair.id}" %>
+
+<h1>Repair #<%= @repair.id %></h1>
+
+<p>
+  Bike:
+  <%= link_to "#{@repair.bike.brand} #{@repair.bike.model} (#{@repair.bike.serial_number})",
+              bike_path(@repair.bike) %>
+</p>
+
+<p>
+  Staff:
+  <% if @repair.staff %>
+    <%= link_to @repair.staff.name, staff_path(@repair.staff) %>
+  <% else %>
+    Not assigned
+  <% end %>
+</p>
+
+<p>
+  Status: <%= @repair.status %> |
+  Approval: <%= @repair.approval_status || "Not recorded" %>
+</p>
+
+<p>Received: <%= l(@repair.received_at, format: :long) %></p>
+
+<p>
+  Promised:
+  <% if @repair.promised_on %>
+    <%= l(@repair.promised_on, format: :long) %>
+  <% else %>
+    Not scheduled
+  <% end %>
+</p>
+
+<p>
+  Ready:
+  <% if @repair.ready_at %>
+    <%= l(@repair.ready_at, format: :long) %>
+  <% else %>
+    Not ready
+  <% end %>
+</p>
+
+<p>
+  Picked up:
+  <% if @repair.picked_up_at %>
+    <%= l(@repair.picked_up_at, format: :long) %>
+  <% else %>
+    Not picked up
+  <% end %>
+</p>
+
+<h2>Services charged</h2>
+
+<% if @repair.repair_services.empty? %>
+  <p>No services charged.</p>
+<% else %>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Repair</th>
+        <th>Service</th>
+        <th>Price charged</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @repair.repair_services %>
+    </tbody>
+  </table>
+<% end %>
+
+<p>
+  Total:
+  <%= number_to_currency(@repair.repair_services.sum(:price_charged),
+                         unit: "$", precision: 0) %>
+</p>
+
+<%= link_to "All repairs", repairs_path %>

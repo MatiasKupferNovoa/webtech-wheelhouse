@@ -10,71 +10,87 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container">
-    <%= link_to "Wheelhouse", root_path, class: "navbar-brand" %>
+      <div class="container">
+        <%= link_to "Wheelhouse", root_path, class: "navbar-brand" %>
 
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#main-navigation"
-      aria-controls="main-navigation"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#main-navigation"
+          aria-controls="main-navigation"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="main-navigation">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <%= link_to "Home",
-                      root_path,
-                      class: "nav-link #{'active' if current_page?(root_path)}",
-                      aria: { current: current_page?(root_path) ? "page" : nil } %>
-        </li>
+        <div class="collapse navbar-collapse" id="main-navigation">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <%= link_to "Home", root_path,
+                          class: "nav-link #{'active' if current_page?(root_path)}",
+                          aria: { current: current_page?(root_path) ? "page" : nil } %>
+            </li>
 
-        <li class="nav-item">
-          <%= link_to "Services",
-                      services_path,
-                      class: "nav-link #{'active' if current_page?(services_path)}",
-                      aria: { current: current_page?(services_path) ? "page" : nil } %>
-        </li>
+            <li class="nav-item">
+              <%= link_to "Customers", customers_path,
+                          class: "nav-link #{'active' if controller_name == 'customers'}",
+                          aria: { current: controller_name == 'customers' ? "location" : nil } %>
+            </li>
 
-        <li class="nav-item">
-          <%= link_to "Visit",
-                      visit_path,
-                      class: "nav-link #{'active' if current_page?(visit_path)}",
-                      aria: { current: current_page?(visit_path) ? "page" : nil } %>
-        </li>
+            <li class="nav-item">
+              <%= link_to "Bikes", bikes_path,
+                          class: "nav-link #{'active' if controller_name == 'bikes'}",
+                          aria: { current: controller_name == 'bikes' ? "location" : nil } %>
+            </li>
 
-        <li class="nav-item">
-          <%= link_to "About",
-                      about_path,
-                      class: "nav-link #{'active' if current_page?(about_path)}",
-                      aria: { current: current_page?(about_path) ? "page" : nil } %>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+            <li class="nav-item">
+              <%= link_to "Repairs", repairs_path,
+                          class: "nav-link #{'active' if controller_name == 'repairs'}",
+                          aria: { current: controller_name == 'repairs' ? "location" : nil } %>
+            </li>
 
-<main class="container py-4">
-  <%= yield %>
-</main>
+            <li class="nav-item">
+              <%= link_to "Services", services_path,
+                          class: "nav-link #{'active' if controller_name == 'services'}",
+                          aria: { current: controller_name == 'services' ? "location" : nil } %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to "Staff", staffs_path,
+                          class: "nav-link #{'active' if controller_name == 'staffs'}",
+                          aria: { current: controller_name == 'staffs' ? "location" : nil } %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to "Visit", visit_path,
+                          class: "nav-link #{'active' if current_page?(visit_path)}",
+                          aria: { current: current_page?(visit_path) ? "page" : nil } %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to "About", about_path,
+                          class: "nav-link #{'active' if current_page?(about_path)}",
+                          aria: { current: current_page?(about_path) ? "page" : nil } %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <%= yield %>
+    </main>
   </body>
 </html>
