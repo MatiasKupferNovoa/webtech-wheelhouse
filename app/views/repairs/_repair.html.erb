@@ -1,6 +1,4 @@
-<tr class="<%= 'table-danger' if repair.promised_on &&
-                               repair.promised_on < Date.current &&
-                               repair.picked_up_at.nil? %>">
+<tr class="<%= 'table-danger' if repair.overdue? %>">
   <td>
     <%= link_to repair.id, repair_path(repair) %>
   </td>

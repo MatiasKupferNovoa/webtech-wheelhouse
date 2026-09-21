@@ -5,7 +5,7 @@
 
 <h2>Repairs</h2>
 
-<% if @staff.repairs.empty? %>
+<% if @repairs.empty? %>
   <p>No repairs assigned.</p>
 <% else %>
   <div class="table-responsive">
@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <%= render @staff.repairs.order(received_at: :desc) %>
+        <%= render @repairs %>
       </tbody>
     </table>
   </div>

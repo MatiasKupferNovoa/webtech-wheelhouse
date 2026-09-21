@@ -23,7 +23,7 @@
 
 <h2 class="h5 mt-4">Repairs</h2>
 
-<% if @bike.repairs.empty? %>
+<% if @repairs.empty? %>
   <p>This bike has no repairs registered.</p>
 <% else %>
   <div class="table-responsive">
@@ -39,7 +39,7 @@
       </thead>
 
       <tbody>
-        <%= render @bike.repairs.order(received_at: :desc) %>
+        <%= render @repairs %>
       </tbody>
     </table>
   </div>
