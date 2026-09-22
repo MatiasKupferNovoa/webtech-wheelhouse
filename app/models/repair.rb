@@ -17,7 +17,7 @@ class Repair < ApplicationRecord
     scope :overdue, -> { open.where("promised_on < ?", Date.current) }
     scope :newest_first, -> { order(received_at: :desc) }
 
-    validates :bike_id, :received_at, :status, presence: true
+    validates :bike_id, :received_at, :promised_on, :status, presence: true
     validate :dates_are_consistent
     validate :status_is_consistent
 

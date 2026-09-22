@@ -36,7 +36,7 @@ Table repairs {
   staff_id bigint [ref: > staffs.id]
 
   received_at timestamp [not null]
-  promised_on date
+  promised_on date [not null]
 
   approval_status varchar
   status varchar [not null, default: "received"]
