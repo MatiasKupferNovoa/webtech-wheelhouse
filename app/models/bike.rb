@@ -10,4 +10,7 @@ class Bike < ApplicationRecord
     def normalize_serial_number
         self.serial_number = serial_number.to_s.strip.upcase
     end
+    def display_name
+        "#{brand} #{model} (#{serial_number})"
+    end
 end

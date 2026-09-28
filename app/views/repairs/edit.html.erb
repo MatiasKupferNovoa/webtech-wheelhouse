@@ -1,0 +1,7 @@
+<% content_for :title, "Edit repair ##{@repair.id}" %>
+
+<h1>Edit repair #<%= @repair.id %></h1>
+
+<%= render "form", repair: @repair %>
+
+<%= link_to "Back to repair", repair_path(@repair), class: "btn btn-outline-secondary mt-3" %>

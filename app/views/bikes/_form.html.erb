@@ -1,0 +1,61 @@
+<%= form_with model: bike do |f| %>
+  <% if bike.errors.any? %>
+    <div class="alert alert-danger">
+      <%= bike.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :customer_id, "Customer", class: "form-label" %>
+    <%= f.collection_select :customer_id, Customer.by_name, :id, :name,
+                            { prompt: "Choose a customer" },
+                            { class: ["form-select", { "is-invalid": bike.errors[:customer_id].any? || bike.errors[:customer].any? }] } %>
+    <% if bike.errors[:customer_id].any? || bike.errors[:customer].any? %>
+      <div class="invalid-feedback">
+        <%= (bike.errors.full_messages_for(:customer_id) + bike.errors.full_messages_for(:customer)).to_sentence %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :brand, class: "form-label" %>
+    <%= f.text_field :brand, class: ["form-control", { "is-invalid": bike.errors[:brand].any? }] %>
+    <% if bike.errors[:brand].any? %>
+      <div class="invalid-feedback">
+        <%= bike.errors.full_messages_for(:brand).to_sentence %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :model, class: "form-label" %>
+    <%= f.text_field :model, class: ["form-control", { "is-invalid": bike.errors[:model].any? }] %>
+    <% if bike.errors[:model].any? %>
+      <div class="invalid-feedback">
+        <%= bike.errors.full_messages_for(:model).to_sentence %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :color, class: "form-label" %>
+    <%= f.text_field :color, class: ["form-control", { "is-invalid": bike.errors[:color].any? }] %>
+    <% if bike.errors[:color].any? %>
+      <div class="invalid-feedback">
+        <%= bike.errors.full_messages_for(:color).to_sentence %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :serial_number, class: "form-label" %>
+    <%= f.text_field :serial_number, class: ["form-control", { "is-invalid": bike.errors[:serial_number].any? }] %>
+    <% if bike.errors[:serial_number].any? %>
+      <div class="invalid-feedback">
+        <%= bike.errors.full_messages_for(:serial_number).to_sentence %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

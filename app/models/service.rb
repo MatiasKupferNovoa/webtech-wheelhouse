@@ -5,7 +5,7 @@ class Service < ApplicationRecord
 
     before_validation :normalize_name
     validates :name, presence: true, uniqueness: true
-    validates :current_price, presence: true, numericality: { greather_than: 0 }
+    validates :current_price, presence: true, numericality: { greater_than: 0 }
 
     def normalize_name
         self.name = name.to_s.strip

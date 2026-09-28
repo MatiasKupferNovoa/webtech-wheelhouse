@@ -3,6 +3,10 @@ class Repair < ApplicationRecord
     belongs_to :staff, optional: true
     has_many :repair_services, dependent: :restrict_with_error
     has_many :services, through: :repair_services, dependent: :restrict_with_error
+    accepts_nested_attributes_for :repair_services,
+        allow_destroy: true,
+        reject_if: ->(attributes) { attributes["service_id"].blank? }
+
     enum :status, {
         received: "received",
         diagnosing: "diagnosing",

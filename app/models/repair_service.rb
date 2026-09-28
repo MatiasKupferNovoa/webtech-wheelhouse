@@ -3,7 +3,7 @@ class RepairService < ApplicationRecord
     belongs_to :service
     scope :by_service, -> { order(:service_id, :repair_id) }
 
-    validates :repair_id, presence: true
+    validates :repair, presence: true
     validates :service_id, presence: true, uniqueness: { scope: :repair_id }
-    validates :price_charged, presence: true, numericality: { greather_than: 0 }
+    validates :price_charged, presence: true, numericality: { greater_than: 0 }
 end

@@ -1,0 +1,8 @@
+<% content_for :title, "Edit #{@customer.name}" %>
+
+<h1>Edit customer</h1>
+
+<%= render "form", customer: @customer %>
+
+<%= link_to "Back to customer", customer_path(@customer),
+            class: "btn btn-outline-secondary mt-3" %>

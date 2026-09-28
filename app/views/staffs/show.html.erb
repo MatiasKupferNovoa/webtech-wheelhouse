@@ -26,4 +26,10 @@
   </div>
 <% end %>
 
-<%= link_to "All staff", staffs_path %>
+<%= link_to "All staff", staffs_path, class: "btn btn-outline-secondary mt-3" %>
+
+<%= link_to "Edit staff member", edit_staff_path(@staff), class: "btn btn-outline-primary mt-3" %>
+
+<%= button_to "Delete staff member", staff_path(@staff), method: :delete,
+    form: { data: { turbo_confirm: "Delete staff member #{@staff.name}?" } },
+    class: "btn btn-outline-danger mt-3" %>

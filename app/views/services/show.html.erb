@@ -36,5 +36,10 @@
   </div>
 <% end %>
 
-<%= link_to "All services", services_path,
-            class: "btn btn-outline-secondary mt-3" %>
+<%= link_to "All services", services_path, class: "btn btn-outline-secondary mt-3" %>
+
+<%= link_to "Edit service", edit_service_path(@service), class: "btn btn-outline-primary mt-3" %>
+
+<%= button_to "Delete service", service_path(@service), method: :delete,
+    form: { data: { turbo_confirm: "Delete service #{@service.name}?" } },
+    class: "btn btn-outline-danger mt-3" %>
