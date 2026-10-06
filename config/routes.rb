@@ -12,7 +12,9 @@ Rails.application.routes.draw do
 
   resources :customers
   resources :bikes
-  resources :repairs
+  resources :repairs do
+    delete "intake_photos/:photo_id", to: "repairs#destroy_photo", on: :member, as: :destroy_photo
+  end
   resources :services
   resources :staffs
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)

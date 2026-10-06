@@ -51,6 +51,32 @@
   <% end %>
 </p>
 
+<h2>Intake photos</h2>
+
+<% if @repair.intake_photos.attached? %>
+  <% @repair.intake_photos.each do |photo| %>
+    <div class="mb-3">
+      <%= link_to rails_blob_path(photo, disposition: "inline"), data: { turbo: false } do %>
+        <%= image_tag photo.variant(:large), alt: "#{@repair.bike.brand} #{@repair.bike.model}, Repair ##{@repair.id}", class: "img-fluid" %>
+      <% end %>
+
+      <%= button_to "Delete photo", destroy_photo_repair_path(@repair, photo_id: photo.id), method: :delete,
+          form: { data: { turbo_confirm: "Delete this photo?" } },
+          class: "btn btn-outline-danger mt-3" %>
+    </div>
+  <% end %>
+<% else %>
+  <p>No intake photos.</p>
+<% end %>
+
+<h2>Diagnosis</h2>
+
+<% if @repair.diagnosis.present? %>
+  <%= @repair.diagnosis %>
+<% else %>
+  <p>No diagnosis recorded.</p>
+<% end %>
+
 <h2>Services charged</h2>
 
 <% if @repair_services.empty? %>

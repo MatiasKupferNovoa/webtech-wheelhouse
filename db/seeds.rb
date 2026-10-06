@@ -8,7 +8,16 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 RepairService.delete_all
-Repair.delete_all
+
+Repair.find_each do |repair|
+  repair.intake_photos.purge
+
+  if repair.rich_text_diagnosis
+    repair.rich_text_diagnosis.embeds.purge
+  end
+
+  repair.destroy!
+end
 Service.delete_all
 Bike.delete_all
 Staff.delete_all
@@ -164,4 +173,28 @@ repair_service_data.each_with_index do |(service_index, price), repair_index|
     service_id: services[service_index].id,
     price_charged: price
   )
+end
+
+repairs.each do |repair|
+  unless repair.received?
+    repair.update!(
+      diagnosis: "<p><strong>Inspection completed</strong></p>
+                  <ul>
+                    <li>Brakes and gears checked.</li>
+                    <li>Chain needs cleaning and lubrication.</li>
+                  </ul>"
+    )
+  end
+end
+
+photo_names = ["bike1.jpg", "bike2.jpg"]
+
+repairs.first(10).each_with_index do |repair, index|
+  names = index == 0 ? photo_names * 2 : [photo_names[index % 2]]
+
+  names.each do |name|
+    File.open(Rails.root.join("db", "seeds", name)) do |file|
+      repair.intake_photos.attach(io: file, filename: name, content_type: "image/jpeg")
+    end
+  end
 end

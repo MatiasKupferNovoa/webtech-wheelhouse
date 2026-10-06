@@ -17,6 +17,11 @@ class Repair < ApplicationRecord
         ready: "ready",
         picked_up: "picked up"
     }
+    has_many_attached :intake_photos do |photo|
+        photo.variant :thumb, resize_to_fill: [120, 120]
+        photo.variant :large, resize_to_fill: [800, 600]
+    end
+    has_rich_text :diagnosis
     scope :open, -> { where(picked_up_at: nil) }
     scope :overdue, -> { open.where("promised_on < ?", Date.current) }
     scope :newest_first, -> { order(received_at: :desc) }
@@ -24,6 +29,7 @@ class Repair < ApplicationRecord
     validates :bike_id, :received_at, :promised_on, :status, presence: true
     validate :dates_are_consistent
     validate :status_is_consistent
+    validate :intake_photos_are_valid
 
     def dates_are_consistent
         return if received_at.nil?
@@ -56,5 +62,17 @@ class Repair < ApplicationRecord
 
     def total
         repair_services.sum { |line| line.price_charged }
+    end
+    
+    def intake_photos_are_valid
+        intake_photos.each do |photo|
+            unless photo.content_type.in?(["image/jpeg", "image/png"])
+                errors.add(:intake_photos, "#{photo.filename} must be JPEG or PNG")
+            end
+
+            if photo.byte_size > 5.megabytes
+                errors.add(:intake_photos, "#{photo.filename} must be 5 MB or smaller")
+            end
+        end
     end
 end

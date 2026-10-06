@@ -6,7 +6,7 @@ class StaffsController < ApplicationController
   end
 
   def show
-    @repairs = @staff.repairs.includes(bike: :customer).newest_first
+    @repairs = @staff.repairs.includes(bike: :customer).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.newest_first
   end
 
   def new

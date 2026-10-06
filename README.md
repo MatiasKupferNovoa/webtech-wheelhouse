@@ -24,6 +24,7 @@ Install the following softwares before setting up the application
 - Yarn
 - PostgreSQL
 - Git
+- Libvips
 
 Verify if the software's version are good with the following commands respectively:
 - ruby -v
@@ -42,6 +43,9 @@ Then, install the Ruby, JavaScript and Bootstrap dependencies:
 - bundle install
 - yarn install
 
+Then, install libvips with this command:
+- sudo apt install libvips-tools
+
 Now start PostgreSQL:
 - sudo service postgresql start
 
@@ -50,7 +54,7 @@ To create the database and load the schema, use this command:
 ## Run app
 To run the application, you need to use this command:
 - bin/dev
-Open http://localhost:3000 and go to Services to see the 20 services and their prices.
+Open http://localhost:3000 and go to Repairs to see the repairs, photo thumbnails, and their diagnosis.
 
 To reload the sample data, use this command:
 - bin/rails db:seed

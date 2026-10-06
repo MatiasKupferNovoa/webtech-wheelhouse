@@ -89,6 +89,21 @@
       </div>
     <% end %>
   </div>
+  <div class="mb-3">
+    <%= f.label :intake_photos, "Intake photos", class: "form-label" %>
+    <%= f.file_field :intake_photos, multiple: true, accept: "image/jpeg,image/png",
+                    class: ["form-control", { "is-invalid": repair.errors[:intake_photos].any? }] %>
+    <% if repair.errors[:intake_photos].any? %>
+      <div class="invalid-feedback">
+        <%= repair.errors.full_messages_for(:intake_photos).to_sentence %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :diagnosis, "Diagnosis", class: "form-label" %>
+    <%= f.rich_textarea :diagnosis, class: "form-control" %>
+  </div>
 
   <% services = Service.by_name.load %>
 

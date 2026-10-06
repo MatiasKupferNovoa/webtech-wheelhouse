@@ -1,5 +1,13 @@
 <tr class="<%= 'table-danger' if repair.overdue? %>">
   <td>
+    <% if repair.intake_photos.attached? %>
+      <%= image_tag repair.intake_photos.first.variant(:thumb),
+                    alt: "#{repair.bike.brand} #{repair.bike.model}, Repair ##{repair.id}" %>
+    <% else %>
+      No photo
+    <% end %>
+  </td>
+  <td>
     <%= link_to repair.id, repair_path(repair) %>
   </td>
   <td>
@@ -16,6 +24,14 @@
       <%= l(repair.promised_on, format: :long) %>
     <% else %>
       Not scheduled
+    <% end %>
+  </td>
+  
+  <td class="text-nowrap">
+    <% if repair.diagnosis.present? %>
+      <%= truncate(repair.diagnosis.to_plain_text.squish, length: 80) %>
+    <% else %>
+      No diagnosis
     <% end %>
   </td>
 </tr>
