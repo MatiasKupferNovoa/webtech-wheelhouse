@@ -51,6 +51,17 @@ Now start PostgreSQL:
 
 To create the database and load the schema, use this command:
 - bin/rails db:setup
+
+## API token setup
+To generate your own token, use:
+- bin/rails secret
+
+Then open the development credentials with:
+- EDITOR="code --wait" bin/rails credentials:edit --environment development
+
+In the file opened, add, replacing Generated_token with your token:
+- api_token: Generated_token
+
 ## Run app
 To run the application, you need to use this command:
 - bin/dev
@@ -58,3 +69,15 @@ Open http://localhost:3000 and go to Repairs to see the repairs, photo thumbnail
 
 To reload the sample data, use this command:
 - bin/rails db:seed
+
+## API usage
+Run the app with "bin/dev", then open
+[published page](https://matiaskupfernovoa.github.io/webtech-lab-01/)
+to see the services and search by ID. Its important that the API must be running locally.
+
+To see the public price list use:
+- curl -i http://localhost:3000/api/v1/services
+
+And for request the repairs, use another bash terminal and enter your token:
+- read -s -p "Token: " WHEELHOUSE_API_TOKEN
+- curl -i -H "Authorization: Bearer $WHEELHOUSE_API_TOKEN" http://localhost:3000/api/v1/repairs
