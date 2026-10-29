@@ -1,0 +1,36 @@
+<% content_for :title, "Sign up" %>
+
+<h1>Sign up</h1>
+
+<%= form_with model: @user, url: registration_path do |f| %>
+  <div class="mb-3">
+    <%= f.label :email_address, "Email", class: "form-label" %>
+    <%= f.email_field :email_address, required: true, autocomplete: "username", class: "form-control" %>
+
+    <% @user.errors.full_messages_for(:email_address).each do |message| %>
+      <p class="text-danger"><%= message %></p>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password, class: "form-label" %>
+    <%= f.password_field :password, required: true, autocomplete: "new-password", class: "form-control" %>
+
+    <% @user.errors.full_messages_for(:password).each do |message| %>
+      <p class="text-danger"><%= message %></p>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password_confirmation, "Confirm password", class: "form-label" %>
+    <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password", class: "form-control" %>
+
+    <% @user.errors.full_messages_for(:password_confirmation).each do |message| %>
+      <p class="text-danger"><%= message %></p>
+    <% end %>
+  </div>
+
+  <%= f.submit "Create account", class: "btn btn-primary" %>
+<% end %>
+
+<%= link_to "Sign in", new_session_path, class: "btn btn-outline-secondary mt-3" %>

@@ -2,7 +2,7 @@ class RepairsController < ApplicationController
   before_action :set_repair, only: [ :show, :edit, :update, :destroy, :destroy_photo ]
 
   def index
-    @repairs = Repair.includes(bike: :customer).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.newest_first
+    @repairs = Repair.includes(bike: :customer, received_by: :staff).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.newest_first
   end
 
   def show
@@ -25,6 +25,7 @@ class RepairsController < ApplicationController
 
   def create
     @repair = Repair.new(repair_params)
+    @repair.received_by = Current.user
 
     if @repair.save
       redirect_to @repair, notice: "Repair ##{@repair.id} was created."
@@ -69,7 +70,7 @@ class RepairsController < ApplicationController
   private
 
   def set_repair
-    @repair = Repair.includes(:staff, :repair_services, bike: :customer).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.find(params[:id])
+    @repair = Repair.includes( :staff, :repair_services, bike: :customer, received_by: :staff ).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.find(params[:id])
   end
 
   def repair_params

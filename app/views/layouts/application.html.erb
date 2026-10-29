@@ -36,7 +36,8 @@
         </button>
 
         <div class="collapse navbar-collapse" id="main-navigation">
-          <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
+          <% if authenticated? %>
             <li class="nav-item">
               <%= link_to "Home", root_path,
                           class: "nav-link #{'active' if current_page?(root_path)}",
@@ -84,7 +85,30 @@
                           class: "nav-link #{'active' if current_page?(about_path)}",
                           aria: { current: current_page?(about_path) ? "page" : nil } %>
             </li>
-          </ul>
+
+            <li class="nav-item">
+              <span class="navbar-text">
+                <%= Current.user.staff&.name || Current.user.email_address %>
+                (<%= Current.user.role %>)
+              </span>
+            </li>
+
+            <li class="nav-item">
+              <%= button_to "Sign out", session_path, method: :delete,
+                            class: "btn btn-outline-secondary" %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "Services", services_path,
+                          class: "nav-link #{'active' if controller_name == 'services'}",
+                          aria: { current: controller_name == 'services' ? "location" : nil } %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to "Sign in", new_session_path, class: "nav-link" %>
+            </li>
+          <% end %>
+        </ul>
         </div>
       </div>
     </nav>

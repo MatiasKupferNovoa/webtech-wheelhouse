@@ -7,6 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+raise "These sample accounts are only for development" unless Rails.env.development?
 RepairService.delete_all
 
 Repair.find_each do |repair|
@@ -18,6 +19,8 @@ Repair.find_each do |repair|
 
   repair.destroy!
 end
+Session.delete_all
+User.delete_all
 Service.delete_all
 Bike.delete_all
 Staff.delete_all
@@ -57,7 +60,8 @@ staff_data = [
   [ "Diego Soto", "mechanic" ],
   [ "Felipe Rojas", "mechanic" ],
   [ "Martín Contreras", "mechanic" ],
-  [ "Paula Reyes", "counter" ]
+  [ "Paula Reyes", "counter" ],
+  [ "Matías Kupfer", "owner" ]
 ]
 
 staffs = staff_data.map do |name, role|
@@ -67,7 +71,29 @@ staffs = staff_data.map do |name, role|
   )
 end
 
-# Customers
+account_data = [
+  [ "diego@example.com", "Diego12345!" ],
+  [ "felipe@example.com", "Felipe12345!" ],
+  [ "martin@example.com", "Martin12345!" ],
+  [ "paula@example.com", "Paula12345!" ],
+  [ "matias@example.com", "Matias12345!" ]
+]
+
+users = account_data.each_with_index.map do |(email, password), index|
+  User.create!(
+    email_address: email,
+    password: password,
+    password_confirmation: password,
+    role: staffs[index].role,
+    staff: staffs[index]
+  )
+end
+
+User.create!(
+  email_address: "unassigned@example.com",
+  password: "Unassigned123!",
+  password_confirmation: "Unassigned123!"
+)
 
 customer_data = [
   [ "Ana Morales", "961234501" ],
@@ -147,6 +173,10 @@ repairs = repair_data.map do |bike_index, staff_index, received_at,
     ready_at: ready_at,
     picked_up_at: picked_up_at
   )
+end
+
+repairs.each_with_index do |repair, index|
+  repair.update!(received_by: users[3]) if index >= 2
 end
 
 repair_service_data = [

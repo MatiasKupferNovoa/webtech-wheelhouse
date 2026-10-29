@@ -81,3 +81,22 @@ To see the public price list use:
 And for request the repairs, use another bash terminal and enter your token:
 - read -s -p "Token: " WHEELHOUSE_API_TOKEN
 - curl -i -H "Authorization: Bearer $WHEELHOUSE_API_TOKEN" http://localhost:3000/api/v1/repairs
+
+## Development emails
+The emails are saved locally in tmp/mails and the mails are not sent over the Internet.
+For recover the password, open the generated file and copy the reset link into the browser.
+The welcome email preview is available in http://localhost:3000/rails/mailers.
+
+## Development accounts
+
+| Email | Password | Role |
+| --- | --- | --- |
+| diego@example.com | Diego12345! | mechanic |
+| felipe@example.com | Felipe12345! | mechanic |
+| martin@example.com | Martin12345! | mechanic |
+| paula@example.com | Paula12345! | counter |
+| matias@example.com | Matias12345! | owner |
+| unassigned@example.com | Unassigned123! | mechanic |
+
+The unassigned account is not linked to a staff member.
+If you run the seed, replaces the existing data, accounts and sessions.

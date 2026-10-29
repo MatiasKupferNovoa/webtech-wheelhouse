@@ -1,6 +1,7 @@
 class Repair < ApplicationRecord
     belongs_to :bike
     belongs_to :staff, optional: true
+    belongs_to :received_by, class_name: "User", optional: true
     has_many :repair_services, dependent: :restrict_with_error
     has_many :services, through: :repair_services, dependent: :restrict_with_error
     accepts_nested_attributes_for :repair_services,

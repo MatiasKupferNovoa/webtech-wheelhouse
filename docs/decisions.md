@@ -16,3 +16,7 @@ The approval decision would need to belong to each "repair_service" instead of t
 The model only know which customer brought the bike. Even if the bike is not permanently from one customer, the bike's history will show the current owner at the repair time.
 ### If the answer is different:
 The model would need a relationship between "customers" and "bikes" to know the currently owner of each bike. The model will also need a entity of the bike ownership to preserve the ownership history and know which owner brought the bike in a specific time.
+
+## Default account role as "mechanic"
+### Reason:
+The new accounts receive the mechanic role by default because it has more responsibilities, diagnosis and repair work. The owner and counter roles must be assigned explicitly.

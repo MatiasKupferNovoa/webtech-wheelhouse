@@ -3,6 +3,15 @@
 <h1>Repair #<%= @repair.id %></h1>
 
 <p>
+  Received by:
+  <% if @repair.received_by %>
+    <%= @repair.received_by.staff&.name || @repair.received_by.email_address %>
+  <% else %>
+    Not recorded
+  <% end %>
+</p>
+
+<p>
   Bike:
   <%= link_to "#{@repair.bike.brand} #{@repair.bike.model} (#{@repair.bike.serial_number})",
               bike_path(@repair.bike) %>
