@@ -100,3 +100,23 @@ The welcome email preview is available in http://localhost:3000/rails/mailers.
 
 The unassigned account is not linked to a staff member.
 If you run the seed, replaces the existing data, accounts and sessions.
+
+## Development accounts
+
+These accounts and passwords are only for local development.
+Run bin/rails db:seed to create them.
+
+| Email | Password | Role | Permissions |
+|---|---|---|---|
+| diego@example.com | Diego12345! | mechanic | Reads assigned repairs, updates their status and diagnosis, and adds photos while not handed back. Reads services and staff. |
+| felipe@example.com | Felipe12345! | mechanic | Reads assigned repairs, updates their status and diagnosis, and adds photos while not handed back. Reads services and staff. |
+| martin@example.com | Martin12345! | mechanic | Reads assigned repairs, updates their status and diagnosis, and adds photos while not handed back. Reads services and staff. |
+| paula@example.com | Paula12345! | counter | Reads, creates and edits customers and bikes. Reads and creates repairs, and edits those not handed back. Reads services and staff. |
+| matias@example.com | Matias12345! | owner | Reads, creates, edits and deletes all workshop resources, subject to model validations. |
+| unassigned@example.com | Unassigned123! | mechanic | Reads services and staff. Has no assigned repairs because it is not linked to a staff member. |
+
+All these accounts can open Home, Visit and About.
+
+For the rules of each action, see [Permissions](docs/permissions.md).
+
+Running the seed, replaces the existing data, accounts and sessions.

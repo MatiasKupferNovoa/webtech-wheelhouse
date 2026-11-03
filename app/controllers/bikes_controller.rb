@@ -2,14 +2,16 @@ class BikesController < ApplicationController
   before_action :set_bike, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @bikes = Bike.includes(:customer).by_brand
+    authorize Bike
+    @bikes = policy_scope(Bike).includes(:customer).by_brand
   end
 
   def show
-    @repairs = @bike.repairs.includes(bike: :customer).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.newest_first
+    @repairs = policy_scope(@bike.repairs).includes(bike: :customer, received_by: :staff).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.newest_first
   end
 
   def new
+    authorize Bike
     if params[:customer_id].present?
       @customer = Customer.find(params.expect(:customer_id))
       @bike = @customer.bikes.build
@@ -22,6 +24,7 @@ class BikesController < ApplicationController
   end
 
   def create
+    authorize Bike
     @bike = Bike.new(bike_params)
 
     if @bike.save
@@ -51,6 +54,7 @@ class BikesController < ApplicationController
 
   def set_bike
     @bike = Bike.includes(:customer).find(params[:id])
+    authorize @bike
   end
 
   def bike_params

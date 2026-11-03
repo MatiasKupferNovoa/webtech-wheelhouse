@@ -7,18 +7,31 @@
       No photo
     <% end %>
   </td>
+
   <td>
     <%= link_to repair.id, repair_path(repair) %>
   </td>
+
   <td>
-    <%= link_to "#{repair.bike.brand} #{repair.bike.model} (#{repair.bike.serial_number})",
-                bike_path(repair.bike) %>
+    <% if policy(repair.bike).show? %>
+      <%= link_to "#{repair.bike.brand} #{repair.bike.model} (#{repair.bike.serial_number})",
+                  bike_path(repair.bike) %>
+    <% else %>
+      <%= "#{repair.bike.brand} #{repair.bike.model} (#{repair.bike.serial_number})" %>
+    <% end %>
   </td>
+
   <td>
-    <%= link_to repair.bike.customer.name,
-                customer_path(repair.bike.customer) %>
+    <% if policy(repair.bike.customer).show? %>
+      <%= link_to repair.bike.customer.name,
+                  customer_path(repair.bike.customer) %>
+    <% else %>
+      <%= repair.bike.customer.name %>
+    <% end %>
   </td>
+
   <td><%= repair.status %></td>
+
   <td>
     <% if repair.promised_on %>
       <%= l(repair.promised_on, format: :long) %>
@@ -26,7 +39,7 @@
       Not scheduled
     <% end %>
   </td>
-  
+
   <td class="text-nowrap">
     <% if repair.diagnosis.present? %>
       <%= truncate(repair.diagnosis.to_plain_text.squish, length: 80) %>

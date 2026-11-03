@@ -2,7 +2,8 @@ class RepairsController < ApplicationController
   before_action :set_repair, only: [ :show, :edit, :update, :destroy, :destroy_photo ]
 
   def index
-    @repairs = Repair.includes(bike: :customer, received_by: :staff).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.newest_first
+    authorize Repair
+    @repairs = policy_scope(Repair).includes( bike: :customer, received_by: :staff ).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.newest_first
   end
 
   def show
@@ -10,6 +11,7 @@ class RepairsController < ApplicationController
   end
 
   def new
+    authorize Repair
     if params[:bike_id].present?
       @bike = Bike.find(params.expect(:bike_id))
       @repair = @bike.repairs.build
@@ -24,6 +26,7 @@ class RepairsController < ApplicationController
   end
 
   def create
+    authorize Repair
     @repair = Repair.new(repair_params)
     @repair.received_by = Current.user
 
@@ -71,23 +74,10 @@ class RepairsController < ApplicationController
 
   def set_repair
     @repair = Repair.includes( :staff, :repair_services, bike: :customer, received_by: :staff ).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.find(params[:id])
+    authorize @repair
   end
 
   def repair_params
-    params.expect(repair: [
-      :bike_id,
-      :staff_id,
-      :received_at,
-      :promised_on,
-      :approval_status,
-      :status,
-      :ready_at,
-      :picked_up_at,
-      :diagnosis,
-      intake_photos: [],
-      repair_services_attributes: [
-        [ :id, :service_id, :price_charged, :_destroy ]
-      ]
-    ])
+    permitted_attributes(@repair || Repair)
   end
 end

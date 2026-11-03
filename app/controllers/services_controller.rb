@@ -3,14 +3,16 @@ class ServicesController < ApplicationController
   before_action :set_service, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @services = Service.by_name
+    authorize Service
+    @services = policy_scope(Service).by_name
   end
 
   def show
-    @repair_services = @service.repair_services.includes(:repair, :service).by_service
+    @repair_services = @service.repair_services.where(repair_id: policy_scope(Repair).select(:id)).includes(:repair, :service).by_service
   end
 
   def new
+    authorize Service
     @service = Service.new
   end
 
@@ -18,6 +20,7 @@ class ServicesController < ApplicationController
   end
 
   def create
+    authorize Service
     @service = Service.new(service_params)
 
     if @service.save
@@ -47,6 +50,7 @@ class ServicesController < ApplicationController
 
   def set_service
     @service = Service.find(params[:id])
+    authorize @service
   end
 
   def service_params

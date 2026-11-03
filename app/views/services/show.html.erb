@@ -38,8 +38,12 @@
 
 <%= link_to "All services", services_path, class: "btn btn-outline-secondary mt-3" %>
 
-<%= link_to "Edit service", edit_service_path(@service), class: "btn btn-outline-primary mt-3" %>
+<% if policy(@service).update? %>
+  <%= link_to "Edit service", edit_service_path(@service), class: "btn btn-outline-primary mt-3" %>
+<% end %>
 
-<%= button_to "Delete service", service_path(@service), method: :delete,
-    form: { data: { turbo_confirm: "Delete service #{@service.name}?" } },
-    class: "btn btn-outline-danger mt-3" %>
+<% if policy(@service).destroy? %>
+  <%= button_to "Delete service", service_path(@service), method: :delete,
+      form: { data: { turbo_confirm: "Delete service #{@service.name}?" } },
+      class: "btn btn-outline-danger mt-3" %>
+<% end %>

@@ -20,3 +20,14 @@ The model would need a relationship between "customers" and "bikes" to know the 
 ## Default account role as "mechanic"
 ### Reason:
 The new accounts receive the mechanic role by default because it has more responsibilities, diagnosis and repair work. The owner and counter roles must be assigned explicitly.
+
+## Authorization exceptions
+
+Sign-in, sign-up and password recovery actions skip policy verification
+because they must work before an account has a session.
+
+Sign-out skips policy verification because every signed-in account
+must be able to end its own session. Authentication is still required.
+
+The public service index and show actions use their policy, which allows
+visitors to read them.

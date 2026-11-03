@@ -43,18 +43,21 @@
                           class: "nav-link #{'active' if current_page?(root_path)}",
                           aria: { current: current_page?(root_path) ? "page" : nil } %>
             </li>
+            <% if policy(Customer).index? %>
+              <li class="nav-item">
+                <%= link_to "Customers", customers_path,
+                            class: "nav-link #{'active' if controller_name == 'customers'}",
+                            aria: { current: controller_name == 'customers' ? "location" : nil } %>
+              </li>
+            <% end %>
 
-            <li class="nav-item">
-              <%= link_to "Customers", customers_path,
-                          class: "nav-link #{'active' if controller_name == 'customers'}",
-                          aria: { current: controller_name == 'customers' ? "location" : nil } %>
-            </li>
-
-            <li class="nav-item">
-              <%= link_to "Bikes", bikes_path,
-                          class: "nav-link #{'active' if controller_name == 'bikes'}",
-                          aria: { current: controller_name == 'bikes' ? "location" : nil } %>
-            </li>
+            <% if policy(Bike).index? %>
+              <li class="nav-item">
+                <%= link_to "Bikes", bikes_path,
+                            class: "nav-link #{'active' if controller_name == 'bikes'}",
+                            aria: { current: controller_name == 'bikes' ? "location" : nil } %>
+              </li>
+            <% end %>
 
             <li class="nav-item">
               <%= link_to "Repairs", repairs_path,

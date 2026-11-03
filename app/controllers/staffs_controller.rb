@@ -2,14 +2,16 @@ class StaffsController < ApplicationController
   before_action :set_staff, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @staffs = Staff.by_name
+    authorize Staff
+    @staffs = policy_scope(Staff).by_name
   end
 
   def show
-    @repairs = @staff.repairs.includes(bike: :customer).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.newest_first
+    @repairs = policy_scope(@staff.repairs).includes(bike: :customer, received_by: :staff).with_attached_intake_photos.with_rich_text_diagnosis_and_embeds.newest_first
   end
 
   def new
+    authorize Staff
     @staff = Staff.new
   end
 
@@ -17,6 +19,7 @@ class StaffsController < ApplicationController
   end
 
   def create
+    authorize Staff
     @staff = Staff.new(staff_params)
 
     if @staff.save
@@ -46,6 +49,7 @@ class StaffsController < ApplicationController
 
   def set_staff
     @staff = Staff.find(params[:id])
+    authorize @staff
   end
 
   def staff_params

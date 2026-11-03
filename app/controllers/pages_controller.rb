@@ -1,10 +1,13 @@
 class PagesController < ApplicationController
-    def home
-    end
+  def home
+    authorize :page
+  end
 
-    def visit
-    end
+  def visit
+    authorize :page
+  end
 
-    def about
-    end
+  def about
+    authorize :page
+  end
 end

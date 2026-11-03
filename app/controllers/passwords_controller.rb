@@ -1,6 +1,7 @@
 class PasswordsController < ApplicationController
   allow_unauthenticated_access only: %i[new create edit update]
   before_action :set_user_by_token, only: %i[ edit update ]
+  skip_after_action :verify_authorized, only: %i[new create edit update]
 
   def new
   end

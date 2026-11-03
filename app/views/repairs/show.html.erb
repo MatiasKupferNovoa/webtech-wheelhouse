@@ -13,8 +13,22 @@
 
 <p>
   Bike:
-  <%= link_to "#{@repair.bike.brand} #{@repair.bike.model} (#{@repair.bike.serial_number})",
-              bike_path(@repair.bike) %>
+  <% if policy(@repair.bike).show? %>
+    <%= link_to "#{@repair.bike.brand} #{@repair.bike.model} (#{@repair.bike.serial_number})",
+                bike_path(@repair.bike) %>
+  <% else %>
+    <%= "#{@repair.bike.brand} #{@repair.bike.model} (#{@repair.bike.serial_number})" %>
+  <% end %>
+</p>
+
+<p>
+  Customer:
+  <% if policy(@repair.bike.customer).show? %>
+    <%= link_to @repair.bike.customer.name,
+                customer_path(@repair.bike.customer) %>
+  <% else %>
+    <%= @repair.bike.customer.name %>
+  <% end %>
 </p>
 
 <p>
@@ -68,10 +82,11 @@
       <%= link_to rails_blob_path(photo, disposition: "inline"), data: { turbo: false } do %>
         <%= image_tag photo.variant(:large), alt: "#{@repair.bike.brand} #{@repair.bike.model}, Repair ##{@repair.id}", class: "img-fluid" %>
       <% end %>
-
-      <%= button_to "Delete photo", destroy_photo_repair_path(@repair, photo_id: photo.id), method: :delete,
-          form: { data: { turbo_confirm: "Delete this photo?" } },
-          class: "btn btn-outline-danger mt-3" %>
+      <% if policy(@repair).destroy_photo? %>
+        <%= button_to "Delete photo", destroy_photo_repair_path(@repair, photo_id: photo.id), method: :delete,
+            form: { data: { turbo_confirm: "Delete this photo?" } },
+            class: "btn btn-outline-danger mt-3" %>
+      <% end %>
     </div>
   <% end %>
 <% else %>
@@ -112,8 +127,12 @@
 
 <%= link_to "All repairs", repairs_path, class: "btn btn-outline-secondary mt-3" %>
 
-<%= link_to "Edit repair", edit_repair_path(@repair), class: "btn btn-outline-primary mt-3" %>
+<% if policy(@repair).update? %>
+  <%= link_to "Edit repair", edit_repair_path(@repair), class: "btn btn-outline-primary mt-3" %>
+<% end %>
 
-<%= button_to "Delete repair", repair_path(@repair), method: :delete,
-    form: { data: { turbo_confirm: "Delete repair ##{@repair.id}?" } },
-    class: "btn btn-outline-danger mt-3" %>
+<% if policy(@repair).destroy? %>
+  <%= button_to "Delete repair", repair_path(@repair), method: :delete,
+      form: { data: { turbo_confirm: "Delete repair ##{@repair.id}?" } },
+      class: "btn btn-outline-danger mt-3" %>
+<% end %>
